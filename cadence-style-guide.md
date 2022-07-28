@@ -34,6 +34,11 @@ Comments are a vital part of smart contracts, allowing users to easily understan
 ### High level documentation at the begining of files (contracts, transactions and scripts)
 Top Level comments and comments for types, fields, events, and functions should use `///` (three slashes) because [the cadence docs generating tool](https://github.com/onflow/cadence/tree/master/tools/docgen) picks up three slash comments to auto-generate docs.
 ### Commenting functions
+Functions should be commented with a:
+  * Description
+  * Parameter descriptions (unless it is obvious)
+  * Return value descriptions (unless it is obvious)
+Regular comments within functions should only use two slashes (`//`)
 ## Whitespace between code lines
 ## Declaring variables and constants
 ## Bracket spaces

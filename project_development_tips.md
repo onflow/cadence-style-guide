@@ -30,7 +30,6 @@ This document serves as mostly an outline of best practices the projects should 
 - The owner should create a design document that lays out the intended high level design and architecture of the smart contract and some basic user stories, as well as any questions that still need to be answered about it.
     - Diagrams should be made where applicable describing state machines, user flows, etc
     - This document should be shared in an issue in the open source repo where the contracts or features are being developed.
-- If the owner has to move to another team, a new owner on the project’s team should be identified and ramped up immediately so that there is always an owner who is intimately involved with the project and is aware of all the details.
 - Keys for the contract and/or admin accounts should be stored in a secure key store such as google KMS or something similar, and the owner should have access to these along with the secondary owner and some other engineering manager. Keys should never be in any file in the public repo.
 - Project owners need to always keep [composability and extensibility](https://www.notion.so/Smart-Contract-Composability-be544f21a2e84596affad73952b21d56) in mind while designing, developing, and documenting their projects.
 - Cadence best practices need to be kept in mind:
@@ -49,9 +48,9 @@ This document serves as mostly an outline of best practices the projects should 
     - Helps the developer and reviewers understand the work-in-progress code better, as well as the intentions of the design (for testing and reviewing)
 - Functions should be commented with a
     - Description
-    - Parameter descriptions (unless it is obvious)
-    - Return value descriptions (unless it is obvious)
-- Top Level comments and comments for types, fields, events, and functions should use `///` (three slashes) because there is a cadence docs generating tool that picks up three slash comments to auto-generate docs. Tool readme: [https://github.com/onflow/cadence/tree/master/tools/docgen](https://github.com/onflow/cadence/tree/master/tools/docgen)
+    - Parameter descriptions
+    - Return value descriptions
+- Top Level comments and comments for types, fields, events, and functions should use `///` (three slashes) to be recognised by the [Cadence Documentation Generator](https://github.com/onflow/cadence-tools/tree/master/docgen)
     - regular comments within functions should only use two slashes (`//`)
 - When looking for reviews, these requirements need to be followed (contracts and features that don’t have these are not ready for review and any reviewers should ask for them before doing the review):
     - Contract needs to be commented as described above
@@ -70,8 +69,6 @@ This document serves as mostly an outline of best practices the projects should 
 ### **Documentation**
 
 - Detailed README.md
-    - Include explanations of Cadence and Flow and links to their docs
-        - Ex: [https://github.com/onflow/flow-nft#what-is-cadence](https://github.com/onflow/flow-nft#what-is-cadence)
     - Explanation of the project itself with links to the app
     - Addresses on various networks
     - High-level technical description of the contracts with emphasis on important types and functionality
@@ -102,7 +99,7 @@ Smart contract upgrades are a big deal and need to be treated as such. It is imp
 - Communicate to all stake-holders
     - Share the code updates PR to managers and engineers on the project to try to get as many reviews as possible to make many people aware of the incoming changes.
     - Share the proposal with the community at least a week in advance (unless it is a critical bug fix)
-        - In the #cadence channel in discord
+        - In the #cadence channel in [the Flow discord server](https://discord.com/invite/J6fFnh2xx6).
         - On the Forum or project blog
     - Share the time of the deployment and the deployment transaction with branch/commit hash information to ensure the transaction itself is correct.
     - Coordinate deployment with managers to make sure it is done correctly and on time.

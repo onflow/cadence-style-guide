@@ -13,7 +13,15 @@ and often also in public Github repos.
 
 Therefore, the process around designing, building, testing, documenting,
 and managing these projects needs to reflect the critical importance they hold in the ecosystem.
-Each project has a responsibility to manage their project clearly and professionally.
+
+Every software project strikes a balance between effort spent on product/feature delivery
+vs the many other demands of the software development lifecycle, whether testing, technical debt,
+automation, refactoring, or documentation etc. Building in Web3 we face the same trade-offs,
+but in a higher risk and consequence environment than what is typical for most software.
+A mismanaged or untested smart contract may result in **significant** financial losses
+as a result of vulnerabilities which were overlooked then exploited.
+We highly recommend builders adopt these best practices to help mitigate these risks.
+
 If they do so, they will be able to build better smart contracts, avoid potential bugs,
 support user and third-party adoption of their projects, and increase their chances of success
 by being a model for good software design. Additionally, the more projects that adopt
@@ -21,10 +29,18 @@ good software design and management standards normalizes this behavior,
 encouraging other projects in the ecosystem to do the same which creates a healthier
 and more vibrant community.
 
+Ensuring appropriate levels of testing results in better smart contracts which have
+pro-actively modeled threats and engineered against them. Ensuring appropriate levels 
+of standards adoption ([FungibleToken](https://github.com/onflow/flow-ft),
+[NFT Catalog](https://www.flow-nft-catalog.com/), [NFT StoreFront](https://github.com/onflow/nft-storefront), etc) by dapp 
+builders amplifies the network effects for all in the ecosystem. NFTs in one dapp can be 
+readily consumed by other dapps through on-chain events with no new integration 
+required. With your help and participation we can further accelerate healthy and vibrant 
+network effects across the Flow ecosystem!
+
 Some of these suggestions might seem somewhat unnecessary,
 but it is important to model what a project can do to manage its smart contracts the best
-so that hopefully all of the projects follow suit.
-It will also make all the Flow smart contracts that much safer and easier to use.
+so that hopefully all of the other projects follow suit.
 
 This also assumes standard software design best practices also apply.
 Indeed, many of these suggestions are more general software design best practices,
@@ -52,32 +68,47 @@ can set themselves up for success.
 
 Here are some recommendations for how projects can organize the foundations of their projects.
 
-### Projects should have a single person ultimately responsible for the smart contract
+### Projects should ensure that there is strong technical leadership for ther smart contracts
 
-This person should be someone who understands Cadence well and has written Cadence smart contracts
+Developing a dapp requires a clear vision for the role of the smart contract and how it's integrated.
+Security vulnerabilities may arise from bugs directly in smart contract code (and elsewhere in the system).
+Asynchronous interaction vectors may lead to forms of malicious abuse,
+DOS etc in a contract triggering explosive gas costs for the developer or other problems.
+
+We recommend that engineers leading a project and deploying to mainnet have an understanding
+of software and security engineering fundamentals and have been thorough
+in their Cadence skills development. More in-depth resources for learning Cadence
+are available [here](https://developers.flow.com/cadence).
+
+The technical leader should be someone who understands Cadence well and has written Cadence smart contracts
 before. Production-level smart contracts are not the place for beginners to get their start.
 
 It should be this person’s responsibility to lead design discussions
 with product managers and the community, write most of the code and tests,
 solicit reviews, make requested changes and make sure the project gets completed in a timely manner.
 
-The owner should also understand how to sign transactions with the CLI
-to upgrade the smart contract, run admin transactions, deploy new contracts, etc.
-If something goes wrong or needs to be handled with a transaction, it is important that the owner
-know how to run transaction and scripts safely to address the issues.
+The leader should also understand how to sign transactions with the CLI
+to deploy/upgrade smart contracts, run admin transactions, and troubleshoot problems, etc.
+If something goes wrong in relation to the smart contract
+that needs to be handled with a bespoke transaction, it is important that the owner
+knows how to build and run transactions and scripts safely to address the issues
+and/or upgrade the smart contracts.
 
-The owner should identify a secondary owner who doesn’t hold any direct responsibility,
-but still has a clear understanding of the code and requirements so they can give good feedback,
+The project should also have a clear plan of succession in case the original owner 
+is not available or leaves the project. It is important that there are others who
+can fill in who have a clear understanding of the code and requirements so they can give good feedback,
 perform effective reviews, and make changes where needed.
-In case the owner is not available or leaves the project,
-this person can also take over easily so there is never a time
-when there is nobody who understands the smart contracts well.
 
 ### Projects should maintain a well-organized open source Repo for their smart contracts
 
-If there isn’t already an open source repo, the owner should create a public GitHub repo
-from [the Flow open source template](https://github.com/onflow/open-source-template)
-and make sure all of this is set up with some initial documentation for what the repo is for
+As projects like NBA Topshot have shown, when a blockchain product becomes successful
+others can and do to build on top of what you are doing.
+Whether that is analytics, tools, or other value adds that could help grow your project ecosystem,
+composability is key and that depends on open source development.
+If there isn’t already an open source repo, builders should consider creating one.
+
+Builders can start from the [the Flow open source template](https://github.com/onflow/open-source-template)
+and make sure all of their repo is set up with some initial documentation for what the repo is for
 before any code is written. External developers and users should have an easily accessible home page
 to go to to understand any given project.
 
@@ -89,6 +120,11 @@ as well as any questions that still need to be answered about it.
     where the contracts or features are being developed,
     then later moved to the README or another important docs page.
 
+A high level design is a key opportunity to model threats
+and understand the risks of the system. The process of collaborating
+and reviewing designs together helps ensure that more edge-cases are captured and addressed.
+It's also a lot less effort to iterate on a design than on hundreds of lines of Cadence.    
+
 ## Development Process Recommendations
 
 ### The Development process should be iterative, if possible
@@ -98,7 +134,14 @@ then add additional features with tests. This ensures that the core features are
 thoughtfully and makes the review process easier because they can focus on each feature
 one at a time instead of being overwhelmed by a huge block of code.
 
-### Comments and field/function descriptions should be standardized and written early
+### Comments and field/function descriptions are essential!
+
+Our experience writing many Cadence smart contracts has taught us how important documentation 
+is. It especially matters what is documented and for whom, and in that way we are no different from 
+any software language. The Why is super important, if for example something - an event - that 
+happens in one contract leads to outcomes in a different contract. The What helps give context, 
+the reason for the code turning out the way it is. The How, you don't document - you've written 
+the code. Comments should be directed to those who will follow after you in changing the code. 
 
 Comments should be written at the same time (or even before) the code is written.
 This helps the developer and reviewers understand the work-in-progress code better,
@@ -116,6 +159,14 @@ Regular comments within functions should only use two slashes (`//`)
 
 ## Testing Recommendations
 
+Summarized below is a list of testing related recommendations 
+which are noteworthy to mention for a typical smart contract project.
+
+Popular testing frameworks to use for cadence are listed here:
+Javascript: [Flow JS Testing](https://developers.flow.com/tools/flow-js-testing)
+Go: [Overflow](https://github.com/bjartek/overflow)
+Cadence: [Cadence Testing Framework](https://github.com/onflow/cadence/blob/ac05b6a0d6005cde468573f0a7a2e3a67f49bd90/docs/testing-framework.mdx)
+Tests written in Cadence!
 
 The same person who writes the code should also write the tests.
 They have the clearest understanding of the code paths and edge cases.
@@ -123,6 +174,8 @@ They have the clearest understanding of the code paths and edge cases.
 
 Tests should be **mandatory**, not optional, even if the contract is copied from somewhere else.
 There should be thorough emulator unit tests in the public repo.
+[See the flow fungible token repo](https://github.com/onflow/flow-ft/tree/master/lib/js/test)
+for an example of unit tests in javascript.
 
 
 Every time there is a new Cadence version or emulator version,
@@ -131,6 +184,9 @@ the dependencies of the repo should be updated to make sure the tests are all st
 
 Tests should avoid being monolithic;
 Individual test cases should be set up for each part of the contract to test them in isolation. 
+See the [`FlowEpoch` smart contract tests](https://github.com/onflow/flow-core-contracts/blob/master/lib/go/test/flow_epoch_test.go)
+for examples written in Go where test cases are split
+into separate blocks for different features.
 There are some exceptions, like contracts that have to run through a state machine
 to test different cases. Positive and negative cases need to be tested.
 
@@ -149,10 +205,12 @@ We recommend storing them in a secure key store such as google KMS or something 
 
 ### Deployments to Testnet or Mainnet should be handled transparently
 
-When deploying or upgrading a contract, it is important to have many eyes on the upgrades
-and clear communication with the project team and community. This builds trust with the community,
-allows the opportunity to catch issues with upgrades before they happen, and provides more time
-and context for community members to react to new features and changes.
+As projects become more successful, communities around them grow.
+In a trustless ecosystem, that also means more of others building on your contracts.
+Before deploying or upgrading a contract, it is important to maintain
+clear community communications with sufficient notice, since changes will always bring added risk.
+Giving community members time to review and address issues with upgrades
+before they happen builds trust and confidence in projects.
 Here are a few suggestions for how to manage a deployment or upgrade.
 
 - Communicate to all stake-holders well in advance
@@ -165,29 +223,53 @@ Here are a few suggestions for how to manage a deployment or upgrade.
 
 ## Responsibilities to the Community
 
-### Project should have thorough Documentation
+Web3 brings tremendous possibilities for engineering applications with trustlessness
+and composability in mind, with Cadence and Flow offering unique features to achieve this.
+If every project treats their community and the Flow community with respect and care,
+the things we can all build together will be very powerful.
 
-Each project should have a Detailed README.md with these sections:
+### Projects should have thorough documentation
+
+Encouraging adoption of project contracts to the broader ecosystem
+raises the bar around code providing clear high-level descriptions,
+with detailed and useful comments within contracts, transactions, and scripts.
+The more that a project can be understood, that it adheres to standards,
+and can be built upon with ease, the more likely others will build against it in turn. 
+
+Each project should have a detailed README.md with these sections:
     - Explanation of the project itself with links to the app
     - Addresses on various networks
     - High-level technical description of the contracts with emphasis on important types and functionality
     - Architecture diagram (if applicable)
     - Include links to tutorials if they are external
+    - Flow smart contract standards that a project implements
 
 Additionally, each contract, transaction, and script should have high-level descriptions
 at the top of their files. This way, anyone in the community can easily 
 come in and understand what each one is doing without having to parse confusing code.
 
-### Projects should Engage with and respond to their own Community
+### Projects should engage with and respond to their own Community
 
-Once a contract is deployed, the work doesn’t stop there. As the developer of a public project on a public blockchain, the owners have an obligation to be helpful and responsive to the community so that they can encourage composability and third party interactions.
+Once a contract is deployed, the work doesn’t stop there.
+Project communities require ongoing nurturing and support.
+As the developer of a public project on a public blockchain,
+the owners have an obligation to be helpful and responsive to the community
+so that they can encourage composability and third party interactions.
 
 - Keep issues open in the repo.
 - The owner should turn on email notifications for new issue creation in the repo.
 - Respond to issues quickly and clean up unimportant ones.
-- Maybe write a blog post about some part of the contracts every once in a while.
+- Consider blog posts to share more details on technical aspects of the project and upcoming changes.
 
-### Projects should contribute to the greater Flow and Cadence Community
+### Projects should contribute to the greater Flow and Cadence community
+
+Flow has a vibrant and growing community of contributors around the world.
+Through our mutual collaboration we've had numerous community Flow Improvement Proposals
+([FLIP](https://github.com/onflow/flow/tree/master/flips)s) shipped.
+If you have an interest in a particular improvement for Flow or Cadence,
+we host open meetings which you are welcome to join (announced on discord)
+and can participate anytime on any of the FLIPs
+[already proposed](https://github.com/onflow/flow/pulls?q=is%3Aopen+is%3Apr+label%3AFLIP).
 
 Responsible project maintainers should contribute to discussions
 about important proposals (new cadence features, standard smart contracts, metadata, etc)
@@ -196,11 +278,6 @@ Projects who contribute to these discussions are able to influence them to ensur
 that the language/protocol changes are favorable to them
 and the rest of the app developers in the ecosystem.
 It also helps the owner to promote the project and themselves.
-
-Owners should also regularly re-evaluate the code of their project to see if it needs to be updated 
-to conform to new standards and new versions of Cadence.
-This will help them identify potential problems with their smart contracts ahead of time
-and be able to stay on the cutting edge of smart contract development.
 
 Resources for Best Practices:
 

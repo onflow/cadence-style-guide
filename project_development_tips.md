@@ -113,8 +113,10 @@ before any code is written. External developers and users should have an easily 
 to go to to understand any given project.
 
 The repo should also have some sort of high-level design document that lays out
-the intended design and architecture of the smart contract and some basic user stories,
-as well as any questions that still need to be answered about it.
+the intended design and architecture of the smart contract.
+The project leads should determine what is best for them to include in the document,
+but some useful things to include are basic user stories, architecture of the smart contracts,
+and any questions that still need to be answered about it.
     - Where applicable, diagrams should be made describing state machines, user flows, etc.
     - This document should be shared in an issue in the open source repo
     where the contracts or features are being developed,

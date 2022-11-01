@@ -1,3 +1,8 @@
+---
+title: "Flow Smart Contract Project Development Standards"
+description: "Learn how to effectively organize and manage a Cadence project"
+---
+
 # Smart Contract Project Development Standards
 
 ## Context
